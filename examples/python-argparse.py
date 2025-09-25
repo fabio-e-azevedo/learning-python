@@ -1,23 +1,26 @@
-#https://lynn-kwong.medium.com/how-to-debug-python-scripts-and-api-code-in-the-console-and-in-vs-code-a0b825ad7d41
+""" https://lynn-kwong.medium.com/how-to-debug-python-scripts-and-api-code-in-the-console-and-in-vs-code-a0b825ad7d41 """
 
 import argparse
 
 def echo_func(*args, **kwargs):
-    for arg in args:
-        print(f"arg = {arg}")
+    for index, value in enumerate(args):
+        print(f"LIST VALUE {index} ===>>> {value}")
 
     for key, value in kwargs.items():
-        print(f"key = {key}, value = {value}")
+        print(f"KEY ===>>> {key}, VALUE ===>>> {value}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Check the options.")
 
     parser.add_argument(
-        "numbers",
+        "-n",
+        "--numbers",
+        dest="numbers",
         metavar="N",
         type=int,
-        nargs="+",
-        help="""The numbers to check.""",
+        nargs="*",
+        default=[],
+        help="The numbers to check.",
     )
 
     parser.add_argument(
@@ -38,6 +41,6 @@ if __name__ == "__main__":
     )
 
     arguments = parser.parse_args()
-
+    
     echo_func(*arguments.numbers, even=arguments.even, level=arguments.level)
-
+    
