@@ -6,7 +6,7 @@ class StrTransformation:
         self._string = string
 
     @property
-    def lowcase(self):
+    def lowercase(self):
         return StrTransformation(self._string.lower())
 
     @property
@@ -67,4 +67,4 @@ a = StrTransformation('Teste! @#$%de*& ^string EspEcIaL.')
 b = a.transformers
 
 print(b.uppercase)
-print(b.lowcase)
+print(b.lowercase)
