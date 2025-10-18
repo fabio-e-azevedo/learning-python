@@ -16,6 +16,10 @@ class StrTransformation:
     @property
     def spaces_by_underscore(self):
         return StrTransformation(self._string.replace(' ', '_'))
+    
+    @property
+    def spaces_by_hiffen(self):
+        return StrTransformation(self._string.replace(' ', '-'))
 
     @property
     def hiffen_by_underscore(self):
@@ -32,6 +36,11 @@ class StrTransformation:
         return StrTransformation(re.sub('_+', '_', self._string))
     
     @property
+    def single_hiffen(self):
+        """Método para remover hifens duplos ou mais."""
+        return StrTransformation(re.sub('-+', '-', self._string))
+    
+    @property
     def without_accents(self):
         """Remove todos os acentos da string."""
         nfkd_form = unicodedata.normalize('NFD', self._string)
@@ -40,8 +49,8 @@ class StrTransformation:
     
     @property
     def without_special_characters(self):
-        """Remove todos os caracteres especiais da string, mantendo apenas letras, números e hifens."""
-        cleaned_str = re.sub(r'[^a-zA-Z0-9_]', '', self._string)
+        """Remove todos os caracteres especiais da string, mantendo apenas letras, números e espaços."""
+        cleaned_str = re.sub(r'[^a-zA-Z0-9 ]', '', self._string)
         return StrTransformation(cleaned_str)
     
     @property
@@ -49,11 +58,12 @@ class StrTransformation:
         return (
             StrTransformation(self._string)
             .trim
-            .hiffen_by_underscore
-            .spaces_by_underscore
-            .single_underscores
-            .without_accents
             .without_special_characters
+            .trim
+            # .spaces_by_underscore
+            # .single_underscores
+            .spaces_by_hiffen
+            .single_hiffen
         )
     
     @property
@@ -63,7 +73,7 @@ class StrTransformation:
     def __repr__(self) -> str:
         return self._string
 
-a = StrTransformation('Teste! @#$%de*& ^string EspEcIaL.')
+a = StrTransformation(' ===>>> Teste! @#$%de*&      ^striñg EspEcIaL.   ')
 b = a.transformers
 
 print(b.uppercase)
