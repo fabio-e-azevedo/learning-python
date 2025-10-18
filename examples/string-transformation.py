@@ -74,7 +74,7 @@ class StrTransformation:
         return self._string
 
 a = StrTransformation(' ===>>> Tëste! @#$%de*&      ^striñg EspEcIaL.   ')
-b = a.transformers
+b = StrTransformation(' ===>>> Tëste! @#$%de*&      ^striñg EspEcIaL.   ').transformers.data
 
-print(b.uppercase)
-print(b.lowercase)
+print(a)
+print(b.lower())
