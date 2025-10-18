@@ -57,7 +57,7 @@ class StrTransformation:
     def transformers(self):
         return (
             StrTransformation(self._string)
-            .trim
+            .without_accents
             .without_special_characters
             .trim
             # .spaces_by_underscore
@@ -73,7 +73,7 @@ class StrTransformation:
     def __repr__(self) -> str:
         return self._string
 
-a = StrTransformation(' ===>>> Teste! @#$%de*&      ^striñg EspEcIaL.   ')
+a = StrTransformation(' ===>>> Tëste! @#$%de*&      ^striñg EspEcIaL.   ')
 b = a.transformers
 
 print(b.uppercase)
