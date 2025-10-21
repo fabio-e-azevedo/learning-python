@@ -1,7 +1,8 @@
 import re
 import unicodedata
 
-class StrTransformation:
+
+class StringTransformer:
     def __init__(self, string):
         self._string = string
 
@@ -11,9 +12,9 @@ class StrTransformation:
         Retorna uma nova instância com todos os caracteres em minúsculas.
 
         Returns:
-            StrTransformation: nova instância contendo a string em minúsculas.
+            StringTransformer: nova instância contendo a string em minúsculas.
         """
-        return StrTransformation(self._string.lower())
+        return StringTransformer(self._string.lower())
 
     @property
     def uppercase(self):
@@ -21,39 +22,49 @@ class StrTransformation:
         Retorna uma nova instância com todos os caracteres em maiúsculas.
 
         Returns:
-            StrTransformation: nova instância contendo a string em maiúsculas.
+            StringTransformer: nova instância contendo a string em maiúsculas.
         """
-        return StrTransformation(self._string.upper())
-    
-    @property
-    def spaces_by_underscore(self):
-        """
-        Substitui espaços por underscores (_) na string.
-
-        Returns:
-            StrTransformation: nova instância com espaços substituídos por '_'.
-        """
-        return StrTransformation(self._string.replace(' ', '_'))
-    
-    @property
-    def spaces_by_hiffen(self):
-        """
-        Substitui espaços por hífens (-) na string.
-
-        Returns:
-            StrTransformation: nova instância com espaços substituídos por '-'.
-        """
-        return StrTransformation(self._string.replace(' ', '-'))
+        return StringTransformer(self._string.upper())
 
     @property
-    def hiffen_by_underscore(self):
+    def space_to_underscore(self):
         """
-        Substitui hífens (-) por underscores (_) na string.
+        Substitui espaço por underscore (_) na string.
 
         Returns:
-            StrTransformation: nova instância com '-' substituído por '_'.
+            StringTransformer: nova instância com espaço substituído por '_'.
         """
-        return StrTransformation(self._string.replace('-', '_'))
+        return StringTransformer(self._string.replace(" ", "_"))
+
+    @property
+    def space_to_hyphen(self):
+        """
+        Substitui espaço por hífen (-) na string.
+
+        Returns:
+            StringTransformer: nova instância com espaço substituído por '-'.
+        """
+        return StringTransformer(self._string.replace(" ", "-"))
+
+    @property
+    def hyphen_to_underscore(self):
+        """
+        Substitui hífen (-) por underscore (_) na string.
+
+        Returns:
+            StringTransformer: nova instância com '-' substituído por '_'.
+        """
+        return StringTransformer(self._string.replace("-", "_"))
+
+    @property
+    def underscore_to_hyphen(self):
+        """
+        Substitui underscore (_) por hífen (-) na string.
+
+        Returns:
+            StringTransformer: nova instância com '_' substituído por '-'.
+        """
+        return StringTransformer(self._string.replace("_", "-"))
 
     @property
     def trim(self):
@@ -61,53 +72,53 @@ class StrTransformation:
         Remove espaços em branco no início e fim da string.
 
         Returns:
-            StrTransformation: nova instância com espaços de borda removidos.
+            StringTransformer: nova instância com espaços de borda removidos.
         """
-        return StrTransformation(self._string.strip())
-    
+        return StringTransformer(self._string.strip())
+
     @property
-    def single_underscores(self):
+    def single_underscore(self):
         """
         Normaliza múltiplos underscores consecutivos para um único '_'.
 
         Returns:
-            StrTransformation: nova instância com underscores simplificados.
+            StringTransformer: nova instância com underscores simplificados.
         """
-        return StrTransformation(re.sub('_+', '_', self._string))
-    
+        return StringTransformer(re.sub("_+", "_", self._string))
+
     @property
-    def single_hiffen(self):
+    def single_hyphen(self):
         """
         Normaliza múltiplos hífens consecutivos para um único '-'.
 
         Returns:
-            StrTransformation: nova instância com hífens simplificados.
+            StringTransformer: nova instância com hífens simplificados.
         """
-        return StrTransformation(re.sub('-+', '-', self._string))
-    
+        return StringTransformer(re.sub("-+", "-", self._string))
+
     @property
-    def without_accents(self):
+    def deaccented(self):
         """
         Remove acentos/diacríticos da string usando normalização Unicode (NFD).
 
         Returns:
-            StrTransformation: nova instância sem caracteres diacríticos.
+            StringTransformer: nova instância sem caracteres diacríticos.
         """
-        nfkd_form = unicodedata.normalize('NFD', self._string)
-        without_accents_str = ''.join([c for c in nfkd_form if not unicodedata.combining(c)])
-        return StrTransformation(without_accents_str)
-    
+        nfkd_form = unicodedata.normalize("NFD", self._string)
+        deaccented_str = "".join([c for c in nfkd_form if not unicodedata.combining(c)])
+        return StringTransformer(deaccented_str)
+
     @property
-    def without_special_characters(self):
+    def alphanumeric_only(self):
         """
         Remove caracteres especiais, mantendo apenas letras, dígitos e espaços.
 
         Returns:
-            StrTransformation: nova instância com caracteres especiais removidos.
+            StringTransformer: nova instância com caracteres especiais removidos.
         """
-        cleaned_str = re.sub(r'[^a-zA-Z0-9 ]', '', self._string)
-        return StrTransformation(cleaned_str)
-    
+        cleaned_str = re.sub(r"[^a-zA-Z0-9 ]", "", self._string)
+        return StringTransformer(cleaned_str)
+
     @property
     def transformers(self):
         """
@@ -121,21 +132,17 @@ class StrTransformation:
         - normaliza múltiplos hífens
 
         Returns:
-            StrTransformation: nova instância resultante das transformações encadeadas.
+            StringTransformer: nova instância resultante das transformações encadeadas.
         """
         return (
-            StrTransformation(self._string)
-            .without_accents
-            .without_special_characters
-            .trim
-            # .spaces_by_underscore
-            # .single_underscores
-            .spaces_by_hiffen
-            .single_hiffen
+            self.deaccented.alphanumeric_only.trim
+            # .space_to_underscore
+            # .single_underscore
+            .space_to_hyphen.single_hyphen
         )
-    
+
     @property
-    def data(self):
+    def value(self):
         """
         Retorna a string atual contida na instância.
 
@@ -143,13 +150,15 @@ class StrTransformation:
             str: a string resultante das transformações aplicadas.
         """
         return self._string
-    
+
     def __repr__(self) -> str:
         return self._string
 
 
-a = StrTransformation(' ===>>> Tëste! @#$%de*&      ^striñg EspEcIaL.   ')
-b = StrTransformation(' ===>>> Tëste! @#$%de*&      ^striñg EspEcIaL.   ').transformers.data
+a = StringTransformer(" ===>>> Tëste! @#$%d'e*&      ^striñg EspEcIaL.   ")
+b = StringTransformer(
+    " ===>>> Tëste! @#$%d`e*&      ^striñg EspEcIaL.   "
+).transformers.value
 
 print(a)
 print(b.lower())
