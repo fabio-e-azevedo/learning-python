@@ -136,8 +136,7 @@ class StringTransformer:
         """
         return (
             self.deaccented.alphanumeric_only.trim
-            # .space_to_underscore
-            # .single_underscore
+            # .space_to_underscore.single_underscore
             .space_to_hyphen.single_hyphen
         )
 
@@ -162,3 +161,4 @@ b = StringTransformer(
 
 print(a)
 print(b.lower())
+
