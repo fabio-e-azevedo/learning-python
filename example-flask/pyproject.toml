@@ -10,6 +10,7 @@ dependencies = [
     "flask-httpauth>=4.8.0",
     "flask-jwt-extended>=4.7.1",
     "granian>=2.5.5",
+    "peewee>=3.18.2",
 ]
 
 [project.scripts]
