@@ -1,0 +1,21 @@
+[project]
+name = "example-flask"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "flask>=3.1.2",
+    "flask-bcrypt>=1.0.1",
+    "flask-httpauth>=4.8.0",
+    "flask-jwt-extended>=4.7.1",
+    "granian>=2.5.5",
+]
+
+[project.scripts]
+app = "main:run"
+
+[dependency-groups]
+dev = [
+    "granian[reload]>=2.5.5",
+]
