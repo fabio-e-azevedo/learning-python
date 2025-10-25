@@ -30,14 +30,15 @@ uv run app
 
 Como Usar a API
 
-1. Registrar um novo usuário
-Endpoint: POST /register
+1. Registrar um novo usuário  
+Endpoint: POST /register  
 ```shell
 curl -X POST -H "Content-Type: application/json" -d '{"username": "dead-duck", "password": "secure-password"}' http://localhost:8000/register
 ```
 
-2. Autenticar e obter um token JWT
-Endpoint: POST /login
+  
+2. Autenticar e obter um token JWT  
+Endpoint: POST /login  
 ```shell
 curl -X POST -u 'dead-duck:secure-password' http://localhost:8000/login
 
@@ -48,8 +49,9 @@ AUTH_BASIC_BASE64=$(echo -n 'dead-duck:secure-password' | base64)
 curl -s -X POST -H "Authorization: Basic $AUTH_BASIC_BASE64" http://localhost:8000/login -o token.json
 ```
 
-3. Acessar uma rota protegida (usando o token JWT)
-Endpoint: POST /set
+  
+3. Acessar uma rota protegida (usando o token JWT)  
+Endpoint: POST /set  
 ```shell
 TOKEN_JWT=$(jq -r '.access_token' token.json)
 
