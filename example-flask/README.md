@@ -28,15 +28,29 @@ uv pip install -e .
 uv run app
 ```
 
+Como Usar a API
+
+1. Registrar um novo usuário
+Endpoint: POST /register
 ```shell
 curl -X POST -H "Content-Type: application/json" -d '{"username": "dead-duck", "password": "secure-password"}' http://localhost:8000/register
 ```
 
+2. Autenticar e obter um token JWT
+Endpoint: POST /login
 ```shell
+curl -X POST -u 'dead-duck:secure-password' http://localhost:8000/login
+
+# OU a string "username:password" é codificada em Base64 e é enviada no cabeçalho Authorization, precedida pela palavra Basic
+
 AUTH_BASIC_BASE64=$(echo -n 'dead-duck:secure-password' | base64)
 
-curl -s -X POST -H 'Content-Type: application/json' -H "Authorization: Basic $AUTH_BASIC_BASE64" http://localhost:8000/login -o token.json
+curl -s -X POST -H "Authorization: Basic $AUTH_BASIC_BASE64" http://localhost:8000/login -o token.json
+```
 
+3. Acessar uma rota protegida (usando o token JWT)
+Endpoint: POST /set
+```shell
 TOKEN_JWT=$(jq -r '.access_token' token.json)
 
 curl -X POST -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN_JWT" -d '{"name": "Dead Duck"}' http://localhost:8000/set

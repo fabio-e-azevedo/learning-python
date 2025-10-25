@@ -130,3 +130,4 @@ dmypy.json
 .vscode
 .DS_Store
 *.db
+.ruff_cache/
