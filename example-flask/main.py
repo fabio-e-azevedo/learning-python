@@ -15,7 +15,9 @@ from flask_jwt_extended import (
 )
 from granian import Granian
 from granian.constants import Interfaces
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -25,7 +27,6 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 auth = HTTPBasicAuth()
-
 
 DATABASE = os.getenv("DATABASE_PATH", "users.db")
 database = peewee.SqliteDatabase(DATABASE)

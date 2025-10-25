@@ -1,11 +1,28 @@
-# Exemplo de um sistema com autenticação seguro.
+# Projeto API com Flask, Peewee e JWT
 
-# Start app command line granian
+Uma API web segura desenvolvida em Python com Flask, utilizando Peewee para persistência de dados em um banco de dados SQLite e JWT (JSON Web Tokens) para autenticação. A API permite registrar novos usuários e proteger endpoints com autenticação.
+
+Funcionalidades
+- Registro de Usuário: Endpoint /register para criar novos usuários com senha segura (hash Bcrypt).
+- Login: Endpoint /login para autenticar usuários via Basic Authentication.
+- Autenticação JWT: Após o login, é gerado um token JWT de acesso que pode ser usado para autenticar outras requisições.
+- Rotas Protegidas: O endpoint /set é protegido, exigindo um token JWT válido para ser acessado.
+- Banco de Dados SQLite: Armazena os dados dos usuários em um arquivo local chamado users.db.
+
+Como Executar
+
+1. Inicializar o banco de dados
+As tabelas do banco de dados são criadas automaticamente na inicialização da aplicação. Não há necessidade de um comando manual para este projeto.
+
+2. Iniciar o servidor
+Você pode iniciar a aplicação de duas formas:
+
+Com comando "granian"
 ```shell
 granian --interface wsgi --workers 1 --backpressure 2 --reload main:app
 ```
 
-# Or start app with uv
+Com comando "uv run"
 ```shell
 uv pip install -e .
 uv run app
