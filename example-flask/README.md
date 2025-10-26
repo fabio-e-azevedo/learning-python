@@ -40,9 +40,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"username": "dead-duck", "
 2. Autenticar e obter um token JWT  
 Endpoint: POST /login  
 ```shell
-curl -X POST -u 'dead-duck:secure-password' http://localhost:8000/login
+curl -X POST -u 'dead-duck:secure-password' http://localhost:8000/login -o token.json
 
-# OU a string "username:password" é codificada em Base64 e é enviada no cabeçalho Authorization, precedida pela palavra Basic
+# Outra forma de autenticar e obter o token JWT
 
 AUTH_BASIC_BASE64=$(echo -n 'dead-duck:secure-password' | base64)
 
@@ -51,9 +51,9 @@ curl -s -X POST -H "Authorization: Basic $AUTH_BASIC_BASE64" http://localhost:80
 
   
 3. Acessar uma rota protegida (usando o token JWT)  
-Endpoint: POST /set  
+Endpoint: POST /data  
 ```shell
 TOKEN_JWT=$(jq -r '.access_token' token.json)
 
-curl -X POST -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN_JWT" -d '{"name": "Dead Duck"}' http://localhost:8000/set
+curl -X POST -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN_JWT" -d '{"name": "Dead Duck"}' http://localhost:8000/data
 ```

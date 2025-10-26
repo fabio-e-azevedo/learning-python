@@ -108,7 +108,7 @@ def login():
     return jsonify(access_token=access_token)
 
 
-@app.route("/set", methods=["POST"])
+@app.route("/data", methods=["POST"])
 @jwt_required()
 def set_value():
     try:
