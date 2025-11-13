@@ -17,16 +17,17 @@ As tabelas do banco de dados são criadas automaticamente na inicialização da 
 2. Iniciar o servidor
 Você pode iniciar a aplicação de duas formas:
 
-Com comando "granian"
-```shell
-granian --interface wsgi --workers 1 --backpressure 2 --reload main:app
-```
-
-Com comando "uv run"
+Em desenvolvimento, com comando "uv run"
 ```shell
 uv pip install -e .
 uv run app
 ```
+
+Em produção com comando "granian"
+```shell
+granian --interface wsgi --workers 1 --backpressure 2 main:app
+```
+
 
 Como Usar a API
 

@@ -122,5 +122,6 @@ def set_value():
 
 def run():
     Granian(
-        target="main:app", interface=Interfaces.WSGI, workers=1, backpressure=2
+        target="main:app", interface=Interfaces.WSGI, workers=1, backpressure=2, reload=True
     ).serve()
+
